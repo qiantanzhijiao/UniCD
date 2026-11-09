@@ -1,0 +1,12 @@
+# Shared eval configuration (used by eval_nuc.py / eval_det.py)
+data:
+  syn_root: /home/jgxy/work/UniCD/IRBFD-syn/VOC2007
+  real_root: /home/jgxy/work/UniCD/IRBFD-real/VOC2007
+  coef_cache: /home/jgxy/work/UniCD/UniCD-repro/outputs/coef_cache_syn.npz
+  scale: 1.0
+
+model:
+  degree: 3
+
+output:
+  save_dir: outputs/eval

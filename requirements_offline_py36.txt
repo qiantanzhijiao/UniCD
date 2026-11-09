@@ -1,0 +1,17 @@
+# Offline runtime dependencies for the target machine
+#   Ubuntu 18.04.6 LTS, Python 3.6.5 (Anaconda), torch 1.8.1+cu101 (already installed)
+#
+# All packages below are the last versions that ship cp36 (Python 3.6) manylinux
+# wheels, so an offline install is possible with `pip install --no-index`.
+#
+# torch / torchaudio are ALREADY present on the target (torch 1.8.1+cu101).
+# torchvision is NOT on PyPI for the cu101 build -> install separately from the
+# PyTorch wheel index (see README "离线安装" section):
+#   torchvision==0.9.1+cu101  (matches torch 1.8.1)
+#
+# opencv-python and tqdm are intentionally omitted: the UniCD code does not
+# import them (they were only listed in the dev requirements.txt).
+numpy==1.19.5
+pillow==8.4.0
+pyyaml==5.4.1
+scipy==1.5.4

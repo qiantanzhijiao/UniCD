@@ -1,0 +1,10 @@
+# UniCD reproduction -- runtime dependencies
+# The paper reports PyTorch 1.7 + CUDA 12.4; torch>=1.9 works for this code.
+torch>=2.0
+torchvision>=0.15
+numpy>=1.21
+opencv-python>=4.5
+pillow>=9.0
+scipy>=1.7
+pyyaml>=5.4
+tqdm>=4.60

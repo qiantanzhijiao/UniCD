@@ -1,0 +1,16 @@
+# Shared eval configuration for the gate=false ablation models.
+# Must match the residual setting of the corresponding training run.
+data:
+  syn_root: /home/jgxy/work/UniCD/IRBFD-syn/VOC2007
+  real_root: /home/jgxy/work/UniCD/IRBFD-real/VOC2007
+  coef_cache: /home/jgxy/work/UniCD/UniCD-repro/outputs/coef_cache_syn.npz
+  scale: 1.0
+
+model:
+  degree: 3
+  residual:
+    enabled: true
+    gate: false
+
+output:
+  save_dir: outputs_improved/eval

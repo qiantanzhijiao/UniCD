@@ -1,0 +1,25 @@
+# Stage 1 -- NUC pre-training on IRBFD-syn (L_cor = MAE(a_hat, a))
+data:
+  syn_root: /home/jgxy/work/UniCD/IRBFD-syn/VOC2007
+  real_root: /home/jgxy/work/UniCD/IRBFD-real/VOC2007
+  coef_cache: /home/jgxy/work/UniCD/UniCD-repro/outputs/coef_cache_syn.npz   # produced by tools/prepare_coefs.py
+  batch_size: 4
+  num_workers: 8
+  hflip: 0.5
+  scale: 1.0
+
+model:
+  degree: 3
+
+train:
+  stage: pretrain
+  epochs: 30            # paper trains 50 total; NUC pre-training runs first
+  lr: 0.001
+  weight_decay: 0.0001
+  seed: 42
+  resume: null
+
+output:
+  save_dir: outputs/pretrain
+  log_every: 20
+  save_every: 5

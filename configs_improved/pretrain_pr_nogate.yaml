@@ -1,0 +1,30 @@
+# Ablation: residual branch WITHOUT the gate (gate=false), no perturbation.
+# Needs its own pre-training (gate must match the joint stage for resume).
+data:
+  syn_root: /home/jgxy/work/UniCD/IRBFD-syn/VOC2007
+  real_root: /home/jgxy/work/UniCD/IRBFD-real/VOC2007
+  coef_cache: /home/jgxy/work/UniCD/UniCD-repro/outputs/coef_cache_syn.npz
+  batch_size: 4
+  num_workers: 8
+  hflip: 0.5
+  scale: 1.0
+
+model:
+  degree: 3
+  residual:
+    enabled: true
+    gate: false
+
+train:
+  stage: pretrain
+  epochs: 30
+  lr: 0.001
+  weight_decay: 0.0001
+  lambda_res: 1.0
+  seed: 42
+  resume: null
+
+output:
+  save_dir: outputs_improved/pretrain_pr_nogate
+  log_every: 20
+  save_every: 5

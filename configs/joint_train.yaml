@@ -1,0 +1,29 @@
+# Stage 2 -- joint correction + detection on IRBFD-syn (L_uni = L_det + L_BR)
+data:
+  syn_root: /home/jgxy/work/UniCD/IRBFD-syn/VOC2007
+  real_root: /home/jgxy/work/UniCD/IRBFD-real/VOC2007
+  coef_cache: /home/jgxy/work/UniCD/UniCD-repro/outputs/coef_cache_syn.npz
+  batch_size: 4
+  num_workers: 8
+  hflip: 0.5
+  scale: 1.0
+
+model:
+  degree: 3
+
+train:
+  stage: joint
+  epochs: 50            # paper: 50 epochs, Adam lr 1e-3, wd 1e-4
+  lr: 0.001
+  weight_decay: 0.0001
+  lambda_tebs_first: 1.0    # lambda = 1 for the first 20 epochs
+  lambda_tebs_after: 0.01   # then 0.01
+  lambda_switch_epoch: 20
+  use_br: true
+  seed: 42
+  resume: outputs/pretrain/epoch_030.pt   # NUC pre-trained weights as init
+
+output:
+  save_dir: outputs/joint
+  log_every: 20
+  save_every: 5

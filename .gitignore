@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+*.bak
+*.pt
+*.npz
+outputs*/
+results/
+logs/
+data/
+*.tar.gz
+.DS_Store

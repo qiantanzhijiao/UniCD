@@ -1,0 +1,33 @@
+# Stage 1 (improved scheme B) -- NUC pre-training with the residual branch.
+# L = L_cor + lambda_res * L_res, L_res = L1(B_total, Y - C) on the free-form
+# residual part. The gate is fixed to 1 here (no detection signal yet).
+data:
+  syn_root: /home/jgxy/work/UniCD/IRBFD-syn/VOC2007
+  real_root: /home/jgxy/work/UniCD/IRBFD-real/VOC2007
+  coef_cache: /home/jgxy/work/UniCD/UniCD-repro/outputs/coef_cache_syn.npz
+  batch_size: 4
+  num_workers: 8
+  hflip: 0.5
+  scale: 1.0
+
+model:
+  degree: 3
+  residual:
+    enabled: true       # parametric + residual dual decomposition
+    gate: true          # must match the joint stage so the checkpoint has the
+                        # gate weights (stage 1 forces g=1; gate stays at init
+                        # and is only learned in stage 2, see forward_nuc_pretrain)
+
+train:
+  stage: pretrain
+  epochs: 30
+  lr: 0.001
+  weight_decay: 0.0001
+  lambda_res: 1.0       # weight of the residual bias-field L1 loss
+  seed: 42
+  resume: null
+
+output:
+  save_dir: outputs_improved/pretrain_pr
+  log_every: 20
+  save_every: 5

@@ -1,0 +1,16 @@
+# Shared eval configuration for the improved (residual) models.
+# Must match the residual setting used at training time.
+data:
+  syn_root: /home/jgxy/work/UniCD/IRBFD-syn/VOC2007
+  real_root: /home/jgxy/work/UniCD/IRBFD-real/VOC2007
+  coef_cache: /home/jgxy/work/UniCD/UniCD-repro/outputs/coef_cache_syn.npz
+  scale: 1.0
+
+model:
+  degree: 3
+  residual:
+    enabled: true
+    gate: true
+
+output:
+  save_dir: outputs_improved/eval

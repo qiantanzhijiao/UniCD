@@ -1,0 +1,44 @@
+# Stage 2 (improved scheme B + A) -- joint training on IRBFD-syn.
+# L = L_det + L_BR + lambda_res * L_res, with the detection-driven gate on and
+# the nonuniformity perturbation augmentation (scheme A) applied to the
+# degraded input. The residual supervision target becomes Y_pert - C, so the
+# residual branch is explicitly trained to absorb unmodelled degradation.
+data:
+  syn_root: /home/jgxy/work/UniCD/IRBFD-syn/VOC2007
+  real_root: /home/jgxy/work/UniCD/IRBFD-real/VOC2007
+  coef_cache: /home/jgxy/work/UniCD/UniCD-repro/outputs/coef_cache_syn.npz
+  batch_size: 4
+  num_workers: 8
+  hflip: 0.5
+  scale: 1.0
+
+model:
+  degree: 3
+  residual:
+    enabled: true
+    gate: true          # per-image gate trained by L_det / L_BR (residual pruning).
+                        # NOTE: keep `gate` in sync with pretrain_pr.yaml so the
+                        # stage-1 checkpoint can be resumed.
+
+train:
+  stage: joint
+  epochs: 50
+  lr: 0.001
+  weight_decay: 0.0001
+  lambda_tebs_first: 1.0
+  lambda_tebs_after: 0.01
+  lambda_switch_epoch: 20
+  use_br: true
+  lambda_res: 1.0
+  perturb:              # scheme A: domain-randomised nonuniformity residual
+    enabled: true
+    p: 0.5              # per-type probability per image
+    types: [hres, stripe, gain]
+    strength: 1.0
+  seed: 42
+  resume: outputs_improved/pretrain_pr/epoch_030.pt
+
+output:
+  save_dir: outputs_improved/joint_pr
+  log_every: 20
+  save_every: 5
